@@ -15,22 +15,22 @@ def validBookObj(bookObj):
         return True
     else:
         return False
-
-
-
-
+        
 @app.route('/')
 def navToBooks():
     return '<a href=\"/books\">Go to Books</a>'
 
-@app.route('/bookPreview')
+#GET
+@app.route('/bookPreview', methods=['GET'])
 def bookPreview():
     return htmlRepository.loadTestFile()
 
-@app.route('/books')
+#GET
+@app.route('/books', methods=['GET'])
 def hello():
     return jsonify({'books':books})
 
+#POST
 @app.route('/books', methods=['POST'])
 def addBook():
     requestData = request.get_json()
@@ -65,9 +65,57 @@ def getbookByISBN(isbn):
             }
     return jsonify(return_value)
 
+def validPutRequestData(requestData):
+    if("name" in requestData and 'price' in requestData):
+        return True
+    else:
+        return False
+
 #PUT
-@app.route('books/<int:isbn>')
+@app.route('/books/<int:isbn>', methods=['PUT'])
 def replaceBook(isbn):
-    return jsonify(request.get_json())
+    requestData = request.get_json()
+    #Validate Book Object
+
+    if(not validPutRequestData(requestData)):
+        invalidBookObjectErrorMsg = {
+            "error":"Valid book object must be passed in this request",
+            "helpString":"Data passed should be similar to this: {'name':'bookname', 'price':1.00 }"
+        }
+        response = Response(json.dumps(invalidBookObjectErrorMsg), status=400, mimetype='application/json')
+        return response
+
+    newBook = {
+        'name': requestData['name'],
+        'price': requestData['price'],
+        'isbn': isbn
+    }
+    i = 0
+    for book in books:
+        currentIsbn = book['isbn']
+        if currentIsbn == isbn:
+            books[i] = newBook
+            i+=1
+
+    response = Response('', status=204)
+    return response
+
+#PATCH
+@app.route('/books/<int:isbn>', methods=['PATCH'])
+def updateBook(isbn):
+    requestData = request.get_json()
+    updatedBook = {}
+    if ("name" in requestData):
+        updatedBook["name"] = requestData["name"]
+    if ("price" in requestData):
+        updatedBook["price"] = requestData["price"]
+    
+    for book in books:
+        if book['isbn'] == isbn:
+            book.update(updatedBook)
+    
+    response = Response("", status=204)
+    response.headers['Location'] = "/books/" + str(isbn)
+    return response
 
 app.run(port=5000)

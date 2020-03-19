@@ -2,29 +2,29 @@ books = [
     {
         'name':'BooklyBook',
         'price':5.33,
-        'isbn':88845554411
+        'isbn':88845554419
 
     },
     {
         'name':'BooklyBook - The Sequeling',
         'price':15.33,
-        'isbn':88845334411
+        'isbn':88845334412
     },
     {
         'name':'BooklyBook - McDadleBook Mysteries',
         'price':5.33,
-        'isbn':88845559911
+        'isbn':88845559917
 
     },
     {
         'name':'BooklyBook - The Nugget Finder',
         'price':15.33,
-        'isbn':89945334411
+        'isbn':89945334410
     },
     {
         'name':'BooklyBook - Voyage of McBook',
         'price':5.33,
-        'isbn':88557554411
+        'isbn':88557954411
 
     },
     {
@@ -35,23 +35,23 @@ books = [
     {
         'name':'BooklyBook - Lost in the Mysterious Quacklspace',
         'price':5.33,
-        'isbn':888555554411
+        'isbn':888555554400
 
     },
     {
         'name':'BooklyBook - Labyrinth of the McBook',
         'price':15.33,
-        'isbn':888453333311
+        'isbn':888453333366
     },
     {
         'name':'BooklyBook - Final Booknation',
         'price':5.33,
-        'isbn':84445554411
+        'isbn':84445554888
 
     },
     {
         'name':'BooklyBook - Ponderous Novelbook',
         'price':15.33,
-        'isbn':88822234411
+        'isbn':88822234231
     }
 ]
