@@ -2,4 +2,6 @@
 def loadTestFile():
     with open('FlaskWebProject1_Test\\testLoadFile.html', 'r') as file:
         openHTML = file
-    return openHTML
+    return str(openHTML)
+
+index = loadTestFile()

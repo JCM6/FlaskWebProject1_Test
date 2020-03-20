@@ -1,14 +1,10 @@
 from flask import Flask, jsonify, request, Response
-import htmlRepository
+import htmlRepository as html
 import booksRepository as b
 import json
-
-app = Flask(__name__)
-
-__name__ == "__main__"
+from settings import *
 
 books = b.books
-
 
 def validBookObj(bookObj):
     if ("name" in bookObj and "price" in bookObj and "isbn" in bookObj):
@@ -18,12 +14,12 @@ def validBookObj(bookObj):
         
 @app.route('/')
 def navToBooks():
-    return '<a href=\"/books\">Go to Books</a>'
+    return '<a href=\"/books\">Go to Books</a>n<div>somethingfin</div>'
 
 #GET
 @app.route('/bookPreview', methods=['GET'])
 def bookPreview():
-    return htmlRepository.loadTestFile()
+    return html.loadTestFile()
 
 #GET
 @app.route('/books', methods=['GET'])
@@ -123,10 +119,18 @@ def updateBook(isbn):
 @app.route('/books/<int:isbn>', methods=["DELETE"])
 def delete_book(isbn):
     i = 0
+    searchSuccess = False
     for book in books:
         if book['isbn']==isbn:
             books.pop(i)
+            response = Response("", status=204)
+            searchSuccess = True
+        if searchSuccess == False:    
+            invalidBookObjectErrorMsg = {
+                "error": "Book with the ISBN Number:" + str(isbn) + ' was not found. Unable to delete a resource that does not exist.'
+            }
+            response = Response(json.dumps(invalidBookObjectErrorMsg), status=404, mimetype='application/json')
         i+=1
-    return ""
+    return response
 
 app.run(port=5000)
