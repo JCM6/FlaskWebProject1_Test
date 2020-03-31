@@ -14,7 +14,8 @@ def validBookObj(bookObj):
         
 @app.route('/')
 def navToBooks():
-    return '<a href=\"/books\">Go to Books</a>n<div>somethingfin</div>'
+    #return '<a href=\"/books\">Go to Books</a>\n<div>somethingfin</div>'
+    return html.chunkPage
 
 #GET
 @app.route('/bookPreview', methods=['GET'])
